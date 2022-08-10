@@ -2,8 +2,7 @@
 .header {
 
 	&__top {
-		background-color: $mainDarkColor;
-		color: #fff;
+
 	}
 
 	&__body {
@@ -14,6 +13,8 @@
 	}
 }
 .top-header {
+	background-color: $mainDarkColor;
+	color: #fff;
 	padding: rem(10) 0;
 
 	&__container {
@@ -37,21 +38,30 @@
 			font-size: rem(28);
 			margin-right: em(15,28);
 		}
+		@media (any-hover: hover){
+			span:hover{
+				text-decoration: underline;
+			}
+		}
 	}
 }
 .menu {
 
 	&__list {
 		display: flex;
-		gap: rem(60);
 		flex-wrap: wrap;
-		line-height: math.div(20,16);
 		row-gap: rem(5);
 		@include adaptiveValue ("column-gap", 60, 20);
 	}
 
 	&__link {
 		font-style: rem(16);
+		line-height: math.div(20 ,16 );
+		@media (any-hover: hover){
+			&:hover{
+				text-decoration: underline;
+			}
+		}
 	}
 }
 .body-header {
@@ -174,6 +184,11 @@
 		font-weight: 700;
 		line-height: math.div(22 ,18 );
 		margin: rem(3) 0 0 0;
+		@media (any-hover: hover){
+			&:hover{
+				text-decoration: underline;
+			}
+		}
 	}
 }
 .cart-header {
@@ -215,8 +230,146 @@
 
 	&__link {
 		color:#e8aa31;
+		@media (any-hover: hover){
+			&:hover{
+				text-decoration: underline;
+			}
+		}
 	}
 }
+.catalog-header {
+	background-color: $mainDarkColor;
+	color: #fff;
+	position: relative;
+
+	&__container {
+		
+	}
+
+	&__menu {
+	}
+}
+.menu-catalog {
+
+	&__list {
+		display: flex;
+		gap: rem(10);
+		justify-content: space-between;
+	}
+
+	&__item {
+	}
+
+	&__link {
+		min-height: rem(70);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		padding: 0 rem(10);
+		position: relative;
+		transition: color 0.3s ease 0s;
+		&::after{
+			content:'';
+			position: absolute;
+			opacity: 0;
+			visibility: hidden;
+			bottom: 0;
+			left: rem(10);
+			width: calc(100% - rem(20));
+			height: 1px;
+			background-color:  #e8aa31;
+			transition: all 0.3s ease 0s;
+		}
+		@media (any-hover: hover){
+			&:hover{
+				color: #e8aa31;
+				&::after{
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+		}
+		&._sub-menu-active{
+			color: #e8aa31;
+			&::after{
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+
+	&__sub-menu {
+		width: 100%;
+		left: 0;
+		top: 100%;
+		background-color: $mainDarkColor;
+		}
+	}
+
+.sub-menu-catalog {
+
+	&__block {
+		padding-bottom: rem(30);
+		display: none;
+		justify-content: space-between;
+		&._sub-menu-open{
+			display: flex;
+			}
+	}
+
+	&__column {
+		flex: 1 1 auto;
+		display: grid;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__category {
+		font-size: rem(16);
+		line-height: math.div(20 ,16 );
+		font-weight: 700;
+		padding: rem(30) rem(10);
+		align-self: start;
+	}
+
+	&__list {
+		flex: 1 1 auto;
+		display: flex;
+		flex-direction: column;
+		gap: rem(20);
+		border-top: 1px solid rgba(255, 255, 255, 0.3);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+		padding: rem(30) rem(10);
+	}
+
+	&__item {
+	}
+
+	&__link {
+		font-size: rem(16);
+		line-height: math.div(20 ,16 );
+		@media (any-hover: hover){
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+	}
+
+	&__all {
+		color:  #e8aa31;
+		font-size: rem(16);
+		transition: all 0.3s ease 0s;
+		padding: rem(30) rem(10) 0 rem(10);
+		align-self: flex-start;
+		@media (any-hover: hover){
+			&:hover{
+				font-weight: 700;
+			}
+		}
+	}
+}
+
 
 
 
