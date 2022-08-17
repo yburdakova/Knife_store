@@ -22,6 +22,9 @@
 		align-items: center;
 		gap: rem(20);
 		min-height: rem(50);
+		@media (max-width: $tablet){
+			gap: rem(30);
+		}
 	}
 
 	&__menu {
@@ -29,18 +32,29 @@
 	}
 
 	&__user {
+		position: relative;
+		z-index: 5;
 		display: inline-flex;
 		align-items: center;
 		font-weight: 600;
 		line-height: math.div(22 ,18);
-		
+		gap: em(15,18);
 		&::before{
 			font-size: rem(28);
-			margin-right: em(15,28);
 		}
 		@media (any-hover: hover){
-			span:hover{
-				text-decoration: underline;
+			&:hover{
+				span{
+					text-decoration: underline;
+				}
+			}
+		}
+		@media (max-width: $tablet){
+			&::before{
+				font-size: rem(35);
+			}
+			span{
+				display: none;
 			}
 		}
 	}
@@ -53,35 +67,44 @@
 			width: 100%;
 			height: 100%;
 			top: 0;
-			left: 0;
+			left: -100%;
 			overflow: auto;
 			background-color: $mainDarkColor;
 			z-index: 2;
-			padding: rem(50) rem(15);
-			  
+			padding: rem(100) rem(15) rem(50) rem(15);
+			transition: left 0.3s ease 0s;
+			.menu-open &{
+				left: 0;
+				&::before{
+					left: 0;
+				}
+			}
+			&::before{
+				content:"";
+				position: fixed;
+				width: 100%;
+				height: 70px;
+				left: -100%;
+				top: 0;
+				background-color: $mainDarkColor;
+			}
 		}
 	}
 	@media (max-width: $tablet){
-		flex: 0 0 30px;
-		  display: block;
+		flex: 1 1 auto;
+		display: flex;
+		justify-content: flex-end;
 	}
 }
 .menu-top-header {
 	
 	&__list {
 		display: flex;
-		flex-wrap: wrap;
 		row-gap: rem(5);
 		@include adaptiveValue ("column-gap", 60, 20);
-	}
-
-	&__link {
-		font-style: rem(16);
-		line-height: math.div(20 ,16 );
-		@media (any-hover: hover){
-			&:hover{
-				text-decoration: underline;
-			}
+		@media (max-width:$tablet){
+			flex-direction: column;
+			row-gap: rem(20);
 		}
 	}
 	&__item {
@@ -90,17 +113,53 @@
 				display: none;		  
 			}
 		}
-
-
+	}
+	&__link {
+		font-size: rem(16);
+		line-height: math.div(20 ,16 );
+		align-items: center;
+		@media (any-hover: hover){
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+		&_catalog{
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: space-between;
+			&::before{
+				flex: 0 0 rem(14);
+				height: rem(14);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: rem(8);
+				transform:  rotate(-90deg);
+			}
+		}
+		@media (max-width:$tablet){
+			@include adaptiveValue("font-size", 30, 20, 1);
+		}
+	}
+	@media (max-width: $tablet){
+		display: none;
 	}
 }
 .body-header {
 	padding: rem(10) 0;
 	background-color: #ecf1f2;
+	
 	&__container{
 		display: flex;
 		min-height: rem(70);
 		align-items: center;
+		@media (max-width:$tablet){
+			justify-content: space-between;
+		}
+		@media (max-width:$mobileSmall){
+			justify-content: center;
+			  
+		}
 	}
 	&__logo{
 		@extend%ic;
@@ -110,29 +169,53 @@
 	}
 	&__search{
 		flex: 1 1 auto;
-		padding-right: rem(20);
-		@include adaptiveValue("padding-left", 158, 20, 1620, 1400, 1)
+		
+		@media (min-width:$tablet){
+			padding-right: rem(20); 
+		}
+		@media (min-width:$mobileSmall){
+			@include adaptiveValue("padding-left", 158, 20, 1620, 1250, 1);
+	  }
+	}
+	
+	&__actions {		
 	}
 }
 .actions-header {
 	display: flex;
 	align-items: center;
-	column-gap: rem(30);
-	@include adaptiveValue("colunm-gap", 30, 20, 1620, 1000, 1);
-	
+	@media (max-width: $tablet){
+		display: none;  
+	}
+	@include adaptiveValue("column-gap", 30, 20, 1620, 1000, 1);
+
 	&__location {
 		display: inline-flex;
 		align-items: center;
 		font-weight: 600;
-		margin: 0 rem(25) 0 0;
-		@include adaptiveValue("margin-right", 25, 0, 1620, 1250, 1);
+		@include adaptiveValue("margin-right", 25, 0, 1620, 1400, 1);
 		&::before{
 			font-size: rem(24);
 			margin: 0 em(10,24) 0 0;
 		}
+		@media (any-hover: hover){
+			&:hover{
+				span{
+					text-decoration: underline;
+				}
+			}  
+		}
 	}
+
 	&__favorite {
+		position: relative;
+		z-index: 5;
 		font-size: rem(27);
+		@media (max-width:$mobile){
+			&::before{
+				font-size: rem(30);
+			}
+		}
 	}
 
 	&__cart {
@@ -140,11 +223,13 @@
 	}
 }
 .search-header{
-	max-width: rem(377);
 	background-color: rgba(7, 7, 7, 0.03);
 	border-radius: rem(3);
 	position: relative;
 	border: 1px solid rgba(4, 4, 4, 0.5);
+	@media (min-width: $tablet){
+		max-width: rem(377);
+	}
 
 	&__button{
 		position: absolute;
@@ -170,8 +255,14 @@
 			color: rgba (0, 0, 0, 0.5);
 		}
 	}
+	@media (max-width:$mobileSmall){
+		  background-color: #fff;
+	}
+	
 }
 .phones-header {
+	position: relative;
+	z-index: 5;
 
 	&__item {
 		position: relative;
@@ -182,16 +273,35 @@
 		font-weight: 600;
 		line-height: math.div(22,18);
 		white-space: nowrap;
+		&::before{
+			@extend %ic;
+			@extend ._icon-phone;
+			display: none;
+		}
+		@media (max-width:$tablet){
+			font-size: rem(25);
+		}
+		@media (max-width:$mobileSmall){
+			&::before{
+				display: block;
+				font-size: rem(30);
+			}
+			span{
+				display: none;
+			}
+		}
 	}
 
 	&__arrow {
 		color: #e8aa31;
 		font-size: rem(10);
-		margin: 0 0 0 em(17,16);
 		transition: transform 0.3s ease 0s;
-
+		margin: 0 0 0 em(17,16);
 		&._spoller-active{
 			transform: rotate(180deg);
+		}
+		@media (max-width:$tablet){
+			display: none;
 		}
 	}
 
@@ -201,11 +311,14 @@
 		width: 100%;
 		left: 0;
 		z-index: 2;
+		margin: rem(5) 0 0 0;
+		border-radius: rem(10);
 		background-color: #fff;
 		padding: rem(15);
-		border-radius: rem(10);
-		margin: rem(5) 0 0 0;
 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+		@media (max-width:$tablet){
+			display: none;
+		}
 
 		li{
 			&:not(:last-child) {margin-bottom: em(5,18);}
@@ -222,13 +335,17 @@
 				text-decoration: underline;
 			}
 		}
+		@media (max-width:$tablet){
+			display: none;
+		}
 	}
 }
 .cart-header {
 	display: flex;
 	column-gap: 15px;
 	align-items: center;
-
+	position: relative;
+	z-index: 5;
 	&__icon {
 		flex: 0 0 37px;
 		font-size: rem(35);
@@ -250,6 +367,7 @@
 	}
 
 	&__body {
+		flex: 0 0 auto;
 		font-size: rem(16);
 		line-height: math.div(20 ,16 );
 		@media (max-width: em(1250)){
@@ -284,27 +402,54 @@
 
 	&__menu {
 	}
+	@media (max-width:$mobileSmall){
+		 padding: rem(20) 0; 		  
+	}
 }
 .menu-catalog {
 
 	&__list {
 		display: flex;
-		gap: rem(10);
+		column-gap: rem(10);
 		justify-content: space-between;
+		@media (max-width:$tablet){
+			flex-direction: column;
+			row-gap: rem(25);
+		}
 	}
 
 	&__item {
 	}
 
 	&__link {
-		min-height: rem(70);
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		padding: 0 rem(10);
 		position: relative;
 		transition: color 0.3s ease 0s;
+		&[data-parent]{
+			&::before{
+				@extend %ic;
+				@extend ._icon-bottom;
+				display: none;
+				@media (max-width:$tablet){
+					transform: translateY(rem(8)) rotate(-90deg);
+					display: block;
+					font-size: rem(8);
+				}
+			}
+			@media (max-width:$tablet){
+				display: flex;
+				width: 100%;
+				flex-direction: row-reverse;
+				justify-content: space-between;
+			}
+		}
+		@media (min-width: $tablet){
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			min-height: rem(70);
+			padding: 0 rem(10);
+		}
 		&::after{
 			content:'';
 			position: absolute;
@@ -326,13 +471,19 @@
 				}
 			}
 		}
-		&._sub-menu-active{
-			color: #e8aa31;
-			&::after{
-				opacity: 1;
-				visibility: visible;
+		@media (min-width:$tablet){
+			&._sub-menu-active{
+				color: #e8aa31;
+				&::after{
+					opacity: 1;
+					visibility: visible;
+				}
 			}
 		}
+		@media (max-width: $tablet){
+			@include adaptiveValue("font-size", 30, 20, 1);  
+		}
+
 	}
 
 	&__sub-menu {
@@ -340,9 +491,56 @@
 		left: 0;
 		top: 100%;
 		background-color: $mainDarkColor;
+	}
+
+	
+	&__back {
+		display: none;
+		@media (max-width:$tablet){
+			display: inline-flex;
+			align-items: center;
+			@include adaptiveValue("font-size", 30, 20, 1);
+			&:not(:last-child){
+				margin-bottom: em(65, 30);
+			}
+			&::before{
+				margin: 0 em(13,30) 0 0;
+			}
 		}
+	}
+	@media (max-width:$tablet){
+		position: fixed;
+		top: 0;
+		left:-100%;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: $mainDarkColor;
+		padding: rem(25) rem(15) rem(50) rem(15);
+		transition: left 0.3s ease 0s;
+		.catalog-open &{
+			left: 0;
+			z-index: 6;
+		}
+	}
 }
 .sub-menu-catalog {
+	@media (max-width:$tablet){
+		position: fixed;
+		top: 0;
+		left:-100%;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: $mainDarkColor;
+		padding: rem(25) rem(15) rem(50) rem(15);
+		transition: left 0.3s ease 0s;
+		.sub-menu-open & {
+			display: block;
+			left: 0;
+			z-index: 6;
+		}
+	}
 
 	&__block {
 		display: none;
@@ -353,6 +551,9 @@
 		}
 		&._sub-menu-open{
 			display: grid;
+			@media (max-width:$tablet){
+				display: block;
+			}
 		}
 	}
 
@@ -363,8 +564,13 @@
 	&__category {
 		font-size: rem(16);
 		line-height: math.div(20 ,16 );
-		font-weight: 700;
-		padding: rem(30) rem(15) rem(30) 0;
+		@media (min-width:$tablet){
+			padding: rem(30) rem(15) rem(30) 0;
+			font-weight: 700;
+		}
+		@media (max-width:$tablet){
+			display: none;
+		}
 	}
 
 	&__list {
@@ -384,10 +590,19 @@
 				text-decoration: underline;
 			}
 		}
+		@media (max-width: $tablet){
+			@include adaptiveValue("font-size", 24, 20, 1);
+		}
 	}
 
+	&__item{
+
+	}
 	&__footer {
 		padding: rem(30) rem(15) rem(30) 0;
+		@media (max-width:$tablet){
+			display: none;
+		}
 	}
 
 	&__all {
@@ -400,6 +615,21 @@
 			}
 		}
 	}
+	&__back {
+		display: none;
+		@media (max-width:$tablet){
+			display: inline-flex;
+			align-items: center;
+			@include adaptiveValue("font-size", 30, 20, 1);
+			&:not(:last-child){
+				margin-bottom: em(65, 30);
+			}
+			&::before{
+				margin: 0 em(13,30) 0 0;
+			}
+		}
+	}
+	
 }
 
 
@@ -411,10 +641,10 @@
 	@media (max-width: $tablet) {
 		display: block;
 		position: relative;
-		width: 30px;
-		height: rem(18);
+		width: 40px;
+		height: 22.5px;
 		cursor: pointer;
-		z-index: 5;
+		z-index: 10;
 		span,
 		&::before,
 		&::after {
